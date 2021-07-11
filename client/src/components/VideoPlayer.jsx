@@ -10,13 +10,16 @@ import ScreenShareIcon from '@material-ui/icons/ScreenShare';
 
 const useStyles = makeStyles((theme) => ({
     video: {
-      width: '600px',
-    },
-    sharevid:{
-      width: '800px'
+      width: '550px',
+      [theme.breakpoints.down('xs')]: {
+        width: '300px',
+      },
     },
     gridContainer: {
       justifyContent: 'center',
+      [theme.breakpoints.down('xs')]: {
+        flexDirection: 'column',
+      },
     },
     paper: {
       padding: '10px',
@@ -43,7 +46,7 @@ function VideoPlayer()
                 <Typography variant="h5" gutterBottom>{name || 'Name'}</Typography>
                 {!shareScr ?
                     (<video playsInline muted ref={myVideo} autoPlay className={classes.video} />):
-                    (<video muted playsInline  ref={myVideo} autoPlay className={classes.sharevid} />)
+                    (<video muted playsInline  ref={myVideo} autoPlay className={classes.video} />)
                 }
                
                 <Grid container className={classes.video} spacing={3} >
