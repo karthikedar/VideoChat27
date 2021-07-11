@@ -1,0 +1,13 @@
+body {
+    background-image: url(https://img.pngio.com/blue-abstract-background-powerpoint-backgrounds-for-free-ambient-backgrounds-png-1920_1080.png);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position: center;
+    background-blend-mode: lighten
+}
+
+* {
+    margin: 0;
+    padding: 0;
+} 
