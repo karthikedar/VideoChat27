@@ -3,7 +3,7 @@ import { io } from 'socket.io-client';
 import Peer from 'simple-peer';
 
 const SocketContext = createContext();
-const socket = io('http://localhost:5000');
+const socket = io('https://video-chat-app2705.herokuapp.com');
 
 const ContextProvider = ({ children }) => {
 const [callAccepted, setCallAccepted] = useState(false);
@@ -39,7 +39,7 @@ socket.on('callUser', ({ from, name: callerName, signal }) => {
     });
   }, []);
 
-  const acceptCall = () => {
+  const answerCall = () => {
     setCallAccepted(true);
 
     const peer = new Peer({ initiator: false, trickle: false, stream });
@@ -73,8 +73,6 @@ socket.on('callUser', ({ from, name: callerName, signal }) => {
 
       peer.signal(signal);
     });
-    //added
-    //stream.current.getTracks().forEach(track => senders.current.push(userVideo.current.addTrack(track,stream.current)));
     connectionRef.current = peer;
   };
 
@@ -83,7 +81,7 @@ socket.on('callUser', ({ from, name: callerName, signal }) => {
 
     connectionRef.current.destroy();
     //New edit
-    //window.location.reload();
+    window.location.reload();
   };
 
   function toggleVideo() {
@@ -153,7 +151,7 @@ socket.on('callUser', ({ from, name: callerName, signal }) => {
       setName,
       callUser,
       leaveCall,
-      acceptCall,
+      answerCall,
       toggleVideo,
       toggleMic,
       shareScreen,

@@ -2,7 +2,6 @@ import React, { useState, useContext } from 'react';
 import { Button, TextField, Grid, Typography, Container, Paper } from '@material-ui/core';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Assignment, Phone, PhoneDisabled } from '@material-ui/icons';
-import ChatIcon from '@material-ui/icons/Chat';
 import { makeStyles } from '@material-ui/core/styles';
 
 import { SocketContext } from '../SocketContext';
@@ -69,9 +68,6 @@ function Options({ children }) {
                   Call
                 </Button>
               )}
-              <Button variant="contained" color="primary" startIcon={<ChatIcon fontSize="large" />} fullWidth  className={classes.margin}>
-                Start Chat
-              </Button>
 
             </Grid>
           </Grid>

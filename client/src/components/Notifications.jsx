@@ -5,14 +5,14 @@ import { SocketContext } from '../SocketContext';
 
 function Notifications()
 {
-  const { acceptCall, call, callAccepted } = useContext(SocketContext);
+  const { answerCall, call, callAccepted } = useContext(SocketContext);
 
   return (
     <>
       {call.isReceivingCall && !callAccepted && (
         <div style={{ display: 'flex', justifyContent: 'space-around' }}>
           <h1>{call.name} is calling:</h1>
-          <Button variant="contained" color="primary" size="large" onClick={acceptCall}>
+          <Button variant="contained" color="primary" size="large" onClick={answerCall}>
             Accept Call
           </Button>
         </div>
