@@ -41,7 +41,7 @@ function App(){
         <div className={classes.overall}>
            <AppBar className={classes.appBar} position="static" color="inherit">
                  <IconButton className={classes.vidIcon} onClick={() =>{ vidRef.current.scrollIntoView({ behavior: 'smooth' }) } } > <VideoCallOutlinedIcon /> </IconButton>
-                 <Typography variant="h1" align="center">Video Call</Typography>
+                 <Typography variant="h1" align="center">KD Video Chat</Typography>
            </AppBar> 
            <VideoPlayer />
            <div ref={vidRef}>
