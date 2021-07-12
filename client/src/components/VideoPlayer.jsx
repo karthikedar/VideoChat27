@@ -6,13 +6,12 @@ import MicOffIcon from '@material-ui/icons/MicOff';
 import  Button  from '@material-ui/core/Button';
 import VideocamIcon from '@material-ui/icons/Videocam';
 import VideocamOffIcon from '@material-ui/icons/VideocamOff';
-import ScreenShareIcon from '@material-ui/icons/ScreenShare';
 
 const useStyles = makeStyles((theme) => ({
     video: {
-      width: '550px',
+      width: '600px',
       [theme.breakpoints.down('xs')]: {
-        width: '300px',
+        width: '250px',
       },
     },
     gridContainer: {
@@ -35,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     
 function VideoPlayer()
 {
-      const { name, callAccepted, myVideo, userVideo, callEnded, stream, call, micswitch,videoswitch, toggleMic, toggleVideo, shareScr, shareScreen ,stopShare} = useContext(SocketContext);
+      const { name, callAccepted, myVideo, userVideo, callEnded, stream, call, micswitch,videoswitch, toggleMic, toggleVideo} = useContext(SocketContext);
       const classes = useStyles();
     
       return (
@@ -44,13 +43,9 @@ function VideoPlayer()
             <Paper className={classes.paper} variant="outlined">
               <Grid item xs={12} md={6} >
                 <Typography variant="h5" gutterBottom>{name || 'Name'}</Typography>
-                {!shareScr ?
-                    (<video playsInline muted ref={myVideo} autoPlay className={classes.video} />):
-                    (<video muted playsInline  ref={myVideo} autoPlay className={classes.video} />)
-                }
-               
+                    <video playsInline muted ref={myVideo} autoPlay className={classes.video} />
                 <Grid container className={classes.video} spacing={3} >
-                     <Grid item xs={4}  className={classes.padding}>
+                     <Grid item xs={6}  className={classes.padding}>
                      {!micswitch ? 
                      (<Button variant="contained" color="primary" startIcon={<MicIcon fontSize="large" />} fullWidth onClick={toggleMic} >
                        Mute
@@ -60,7 +55,7 @@ function VideoPlayer()
                      </Button>
                      )}
                      </Grid>   
-                     <Grid item xs={4} className={classes.padding}>
+                     <Grid item xs={6} className={classes.padding}>
                      {!videoswitch ? 
                        (<Button  variant="contained" color="primary" startIcon={<VideocamIcon fontSize="large" />} fullWidth onClick={toggleVideo} >
                           Disable Video
@@ -70,16 +65,6 @@ function VideoPlayer()
                       </Button>
                      )}
                      </Grid>
-                     <Grid item xs={4} className={classes.padding}>
-                     {!shareScr ? 
-                       (<Button  variant="contained" color="primary" startIcon={<ScreenShareIcon fontSize="large" />} fullWidth onClick={shareScreen} >
-                          Share Screen
-                       </Button>) : 
-                       (<Button   variant="contained" color="secondary" startIcon={<ScreenShareIcon fontSize="large" />} fullWidth onClick={stopShare} >
-                          Stop Sharing 
-                      </Button>
-                     )}
-                     </Grid> 
                  </Grid>     
 
                 

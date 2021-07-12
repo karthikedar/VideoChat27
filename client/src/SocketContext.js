@@ -14,21 +14,16 @@ const [call, setCall] = useState({});
 const [me, setMe] = useState('');
 const [micswitch, setMicswitch] = useState(false);
 const [videoswitch, setVideoswitch] = useState(false);
-const [shareScr, setShareScr] = useState(false);
-//const [initialVideo, setInitialVideo] = useState({});
-const [initialVideo, setInitialVideo] = useState({});
 
 const myVideo = useRef();
 const userVideo = useRef();
 const connectionRef = useRef();
-//const senders= useRef([]);
 
 
 useEffect(() => {
     navigator.mediaDevices.getUserMedia({ video: true, audio: true })
       .then((currentStream) => {
         setStream(currentStream);
-
         myVideo.current.srcObject = currentStream;
 });
 
@@ -37,9 +32,11 @@ socket.on('me', (id) => setMe(id));
 socket.on('callUser', ({ from, name: callerName, signal }) => {
       setCall({ isReceivingCall: true, from, name: callerName, signal });
     });
-  }, []);
+    
+}, []);
 
-  const answerCall = () => {
+
+const answerCall = () => {
     setCallAccepted(true);
 
     const peer = new Peer({ initiator: false, trickle: false, stream });
@@ -58,10 +55,23 @@ socket.on('callUser', ({ from, name: callerName, signal }) => {
   };
 
   const callUser = (id) => {
+    if(id === '')
+   {
+     alert('Enter A CaLLer Id');
+   }
+   else
+   {
     const peer = new Peer({ initiator: true, trickle: false, stream });
 
     peer.on('signal', (data) => {
-      socket.emit('callUser', { userToCall: id, signalData: data, from: me, name });
+      if(name === '')
+      {
+        alert('Enter Your Name Pls');
+      }
+      else
+      {
+       socket.emit('callUser', { userToCall: id, signalData: data, from: me, name });
+      }
     });
 
     peer.on('stream', (currentStream) => {
@@ -74,17 +84,19 @@ socket.on('callUser', ({ from, name: callerName, signal }) => {
       peer.signal(signal);
     });
     connectionRef.current = peer;
+  }
   };
-
   const leaveCall = () => {
     setCallEnded(true);
 
     connectionRef.current.destroy();
-    //New edit
-    window.location.reload();
+  };
+  const rejectCall = () => {
+      setCall({ isReceivingCall:false });
   };
 
-  function toggleVideo() {
+
+  const toggleVideo = () => {
     if(stream != null && stream.getVideoTracks().length > 0){
       setVideoswitch(!videoswitch)
       stream.getVideoTracks()[0].enabled = videoswitch;
@@ -92,48 +104,14 @@ socket.on('callUser', ({ from, name: callerName, signal }) => {
   
   }
   
-  function toggleMic() {
+  const toggleMic= () => {
     if(stream != null && stream.getAudioTracks().length > 0){
       setMicswitch(!micswitch)
       stream.getAudioTracks()[0].enabled = micswitch;
     }     
   }
-  function stopShare() {
-    setShareScr(false);
-    myVideo.current.srcObject = initialVideo;
-
-  }
-  function shareScreen()  {
-    setShareScr(true);
-    navigator.mediaDevices.getDisplayMedia({ cursor: true }).then(currentStream => {
-      const screenTrack = currentStream;
-      setInitialVideo(myVideo.current.srcObject);
-      myVideo.current.srcObject = screenTrack;
-     
-     //AddedNow
-     //currentStream.getVideoTracks()[0].onended = stopShare();
-   })
-  }
-  // function stopShare() {
-  //   setShareScr(false);
-  //   stream.getVideoTracks()[0]= initialVideo;
-
-  // }
-  // function shareScreen() {
-  //   navigator.mediaDevices.getDisplayMedia({ cursor: true }).then(currentStream => {
-  //       const screenTrack = currentStream.getTracks()[0];
-  //       setInitialVideo(stream.getVideoTracks()[0]);
-  //       stream.getVideoTracks()[0] = screenTrack;
-  //       setShareScr(true);
-  //       screenTrack.onended = stopShare();
-  //   })}
-
-
   
-
-  
-
-  return (
+return (
     <SocketContext.Provider value={{
       
       callAccepted,
@@ -146,16 +124,13 @@ socket.on('callUser', ({ from, name: callerName, signal }) => {
       me,
       micswitch,
       videoswitch,
-      shareScr,
-      
       setName,
       callUser,
       leaveCall,
       answerCall,
       toggleVideo,
       toggleMic,
-      shareScreen,
-      stopShare
+      rejectCall
     }}
     >
       {children}

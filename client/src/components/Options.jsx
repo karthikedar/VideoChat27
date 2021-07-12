@@ -3,7 +3,6 @@ import { Button, TextField, Grid, Typography, Container, Paper } from '@material
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import { Assignment, Phone, PhoneDisabled } from '@material-ui/icons';
 import { makeStyles } from '@material-ui/core/styles';
-
 import { SocketContext } from '../SocketContext';
 
 const useStyles = makeStyles((theme) => ({
@@ -68,7 +67,6 @@ function Options({ children }) {
                   Call
                 </Button>
               )}
-
             </Grid>
           </Grid>
         </form>
